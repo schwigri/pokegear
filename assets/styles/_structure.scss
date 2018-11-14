@@ -1,0 +1,109 @@
+html {
+  height: 100%;
+}
+
+body {
+  font-family: 'ff-tisa-sans-web-pro', sans-serif;
+  height: 100%;
+}
+
+.logo-container {
+  display: block;
+  height: 32px;
+  width: 189px;
+}
+
+.logo {
+  height: 100%;
+  object-fit: scale-down;
+  object-position: center;
+  width: 100%;
+}
+
+.masthead {
+  align-items: center;
+  background-color: $c_light;
+  display: flex;
+  height: $masthead_height;
+  justify-content: center;
+  width: 100%;
+
+  &.no-account {
+    .masthead-left,
+    .masthead-right {
+      display: none;
+    }
+  }
+}
+
+.masthead-contents {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 1em;
+  width: 100%;
+}
+
+.masthead-left,
+.masthead-right {
+  flex-basis: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.masthead-left {
+  display: flex;
+
+  .masthead-nav-link {
+    margin-right: 1em;
+  }
+}
+
+.masthead-right {
+  display: flex;
+  justify-content: flex-end;
+
+  .masthead-nav-link {
+    margin-left: 1em;
+  }
+}
+
+.masthead-center {
+  flex-basis: auto;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.masthead-nav {
+  align-items: center;
+  display: flex;
+}
+
+.masthead-nav-link {
+  border-radius: 1em;
+  color: white;
+  padding: .5em;
+  text-decoration: none;
+  transition: background-color .25s ease-out, color .25s ease-out;
+
+  &:hover {
+    background-color: $c_dark;
+    color: #fff;
+  }
+}
+
+.masthead-nav-button {
+  background-color: #fff;
+  border-radius: 1em;
+  color: $c_dark;
+  font-weight: bold;
+  padding: .5em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.page {
+  margin: 2em auto;
+  max-width: $wrapper_width;
+}

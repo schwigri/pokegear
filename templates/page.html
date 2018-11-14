@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1">
+  <title>{{ page.title }}</title>
+  {% include 'favicon.html' %}
+  <link rel="stylesheet" href="/assets/styles/design.css">
+  <link rel="stylesheet" href="https://use.typekit.net/fmx5oal.css">
+  {% for tag in page.head_tags %}
+    {{ tag|safe }}
+  {% endfor %}
+</head>
+<body data-page="{{ page.id }}">
+  {% include 'masthead.html' %}
+  <div class="page">
+    {% include page.content %}
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+  <script src="/assets/scripts/app.js"></script>
+  {% for script in page.script_tags %}
+    {{ script|safe }}
+  {% endfor %}
+</body>
+</html>

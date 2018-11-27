@@ -13,9 +13,16 @@
 </head>
 <body data-page="{{ page.id }}">
   {% include 'masthead.html' %}
-  <div class="page">
-    {% include page.content %}
+  {% if page.id == 'portal' %}
+  <div id="authentication-portal" class="authentication-portal">
+    <div class="authentication-portal-content">
+      <div id="firebaseui-auth-container" class="firebaseui-auth-container"></div>
+    </div>
   </div>
+  {% endif %}
+  <main class="content">
+    {% include page.content %}
+  </main>
   <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
   <script src="/assets/scripts/app.js"></script>
   {% for script in page.script_tags %}

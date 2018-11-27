@@ -4,12 +4,13 @@ html {
 
 body {
   font-family: 'ff-tisa-sans-web-pro', sans-serif;
-  height: 100%;
+  overflow: auto;
 }
 
 .logo-container {
   display: block;
   height: 32px;
+  position: relative;
   width: 189px;
 }
 
@@ -20,19 +21,77 @@ body {
   width: 100%;
 }
 
+.secondary-logo {
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transition: opacity .25s;
+}
+
 .masthead {
   align-items: center;
   background-color: $c_light;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .15);
   display: flex;
   height: $masthead_height;
   justify-content: center;
+  left: 0;
+  position: fixed;
+  top: 0;
+  transition: background-color .25s, box-shadow .25s;
   width: 100%;
+  z-index: 100;
+
+  &.inverse {
+    background-color: rgba(0, 0, 0, 0);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0);
+
+    &:not(.light) {
+      color: $c_light;
+
+      .secondary-logo {
+        opacity: 1;
+      }
+
+      .masthead-nav-link {
+        color: $c_light;
+
+        &:hover {
+          background-color: $c_light;
+          color: #fff;
+        }
+      }
+    }
+  }
 
   &.no-account {
     .masthead-left,
     .masthead-right {
       display: none;
     }
+  }
+
+  .requires-account {
+    display: none;
+  }
+
+  &.logged-in {
+    .requires-account {
+      display: block;
+    }
+
+    .requires-no-account {
+      display: none;
+    }
+
+    .empty {
+      display: none;
+    }
+  }
+
+  .empty {
+    display: none;
   }
 }
 
@@ -55,6 +114,7 @@ body {
 .masthead-left {
   display: flex;
 
+  .masthead-nav-button,
   .masthead-nav-link {
     margin-right: 1em;
   }
@@ -104,6 +164,241 @@ body {
 }
 
 .page {
-  margin: 2em auto;
+  box-sizing: border-box;
+  margin: $masthead_height auto 0;
   max-width: $wrapper_width;
+  padding: 2em 1em;
+}
+
+.single-form {
+  max-width: 60%;
+
+  .btn {
+    display: block;
+  }
+}
+
+.form-group {
+  border: 1px solid #eee;
+  border-radius: 1em;
+  margin: 2em 0 1em;
+  padding: 1em 0 0;
+  position: relative;
+}
+
+.text-label {
+  background-color: #fff;
+  display: inline-block;
+  font-size: 1.2em;
+  font-weight: bold;
+  position: absolute;
+  left: 1em;
+  top: -.5em;
+}
+
+.content {
+  box-sizing: border-box;
+  //margin-top: $masthead_height;
+}
+
+.button {
+  background-color: $c_light;
+  border-radius: 1em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .25);
+  color: #fff;
+  cursor: pointer;
+  padding: .15em .75em;
+  text-decoration: none;
+
+  &:active {
+    background-color: $c_dark;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .5);
+  }
+}
+
+.section {
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  width: 100%;
+
+  &:first-child {
+    height: 60vh;
+    padding-top: $masthead_height;
+  }
+
+  header,
+  p {
+    position: relative;
+    z-index: 50;
+  }
+}
+
+.large-text {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  justify-content: center;
+
+  h1 {
+    font-size: 3em;
+  }
+
+  p {
+    font-size: 1.8em;
+  }
+}
+
+.home-slider {
+  background-color: #000;
+  color: #fff;
+
+  &::after {
+    background-image: url(/assets/graphics/pattern.jpg);
+    background-size: 200px;
+    content: '';
+    height: 100%;
+    left: 0;
+    opacity: .25;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+  }
+}
+
+.input-select,
+.input-text {
+  -webkit-appearance: none;
+  background-color: #fff;
+  border: none;
+  box-sizing: border-box;
+  display: block;
+  padding: 1em 1.2em;
+  width: 100%;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+
+.form-description {
+  background-color: #eee;
+  border-radius: 0 0 1.1em 1.1em;
+  box-sizing: border-box;
+  color: #666;
+  display: block;
+  font-size: .8em;
+  padding: .5em 1.2em;
+  text-align: center;
+  width: 100%;
+}
+
+.btn {
+  -webkit-appearance: none;
+  background-color: #fff;
+  border: none;
+  font-weight: bold;
+  margin: 0 auto;
+  padding: 1em 2em;
+  text-decoration: none;
+}
+
+.btn-submit {
+  background-color: $c_light;
+  border-radius: 1em;
+  box-shadow: 2px 4px 4px rgba(0, 0, 0, .5);
+  color: #fff;
+  transition: background-color .25s, box-shadow .25s;
+
+  &:active {
+    background-color: $c_dark;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
+    outline: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.pokedex-container {
+  box-sizing: border-box;
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;
+  width: 100%;
+}
+
+.pokedex {
+  flex-grow: 1;
+  padding: calc(#{$masthead_height} + 2em) calc(#{$sidebar_width} + 4em) 4em 4em;
+  width: auto;
+}
+
+.pokedex-items-container {
+  box-sizing: border-box;
+  display: grid;
+  grid-gap: 1px;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 1fr;
+}
+
+.pokedex-item {
+  box-shadow: 0 0 0 1px #eee;
+  cursor: pointer;
+  position: relative;
+  transition: background-color .25s;
+  user-select: none;
+
+  &.caught {
+    background-color: $c_accent;
+
+    .pokedex-item-number-container {
+      color: #555;
+    }
+  }
+}
+
+.pokedex-item-image-container {
+  height: 100px;
+  min-height: 80px;
+  max-height: 120px;
+  width: 100%;
+
+  & > img {
+    height: 100%;
+    object-position: center;
+    object-fit: scale-down;
+    width: 100%;
+  }
+}
+
+.pokedex-item-number-container {
+  color: #aaa;
+  font-weight: bold;
+  left: .5em;
+  position: absolute;
+  top: .5em;
+}
+
+.pokedex-item-name-container {
+  padding: 0 0 .5em;
+  text-align: center;
+}
+
+.sidebar {
+  flex-shrink: 0;
+  height: 100%;
+  position: fixed;
+  right: 0;
+  top: $masthead_height;
+  width: $sidebar_width;
+}
+
+.pokedex-list-item {
+  overflow: auto;
+  padding: 2em 0;
 }

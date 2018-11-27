@@ -1,19 +1,23 @@
-<div id="masthead" class="masthead no-account">
+<div id="masthead" class="masthead inverse logged-out {% if page.id == 'portal' %} light {% endif %}">
   <div class="masthead-contents">
     <div class="masthead-left">
       <nav class="masthead-nav" id="masthead-left-nav">
-        <a href="/" class="masthead-nav-button">Ultra Sun</a>
+        <a href="/" class="masthead-nav-link">About</a>
+        <a href="/" class="masthead-nav-link">Get In Touch</a>
       </nav>
     </div>
     <div class="masthead-center">
       <a href="/" class="logo-container masthead-logo-container">
         <img src="/assets/graphics/logo-white.svg" alt="Pokégear" class="logo">
+        <img src="/assets/graphics/logo-color.svg" class="logo secondary-logo" aria-hidden="true">
       </a>
     </div>
     <div class="masthead-right">
       <nav class="masthead-nav" id="masthead-right-nav">
-        <a href="/account/" class="masthead-nav-link">My Trainer Card</a>
-        <a href="/log-out/" class="masthead-nav-link">Log Out</a>
+        <a href="#" class="masthead-nav-link requires-no-account log-in-link" id="log-in-link">Log In/Register</a>
+        <a href="/dex" class="masthead-nav-button requires-account empty" id="current-dex"></a>
+        <a href="/account/" class="masthead-nav-link requires-account">My Trainer Card</a>
+        <a href="/log-out/" class="masthead-nav-link requires-account" id="log-out-link">Log Out</a>
       </nav>
     </div>
   </div>

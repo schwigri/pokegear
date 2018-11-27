@@ -1,6 +1,24 @@
 <div class="page">
   <header>
     <h1>Welcome!</h1>
+    <p>Let&rsquo;s add a game to your account. Fill out the information below to begin your quest!</p>
   </header>
-  <p>Let&rsquo;s get you started with your first game. Fill out the information below to begin your quest!</p>
+  <form method="post" class="single-form" id="onboarding-form">
+    <div class="form-group">
+      <label for="game" class="text-label">Game</label>
+      <select class="input-select" name="game" id="game" required="required">
+        <option value="" selected="selected" disabled="disabled">Select a game</option>
+        {% for game in games %}
+          <option value="{{ game.id }}">{{ game.name }}</option>
+        {% endfor %}
+      </select>
+      <span class="form-description">Choose a game to start with. You can add more later!</span>
+    </div>
+    <div class="form-group">
+      <label for="trainer-name" class="text-label">Trainer name</label>
+      <input type="text" class="input-text" name="trainer-name" id="trainer-name" required="required">
+      <span class="form-description">This is for the game you selected above, but you can change it later.</span>
+    </div>
+    <button class="btn btn-submit" type="submit" name="submit" id="submit">Let&rsquo;s go!</button>
+  </form>
 </div>

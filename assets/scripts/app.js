@@ -69,7 +69,6 @@ firebase.auth().onAuthStateChanged((user) => {
         db.collection('users').doc(user.uid).collection('pokedexes').get().then((ps) => {
           let userPokedexesContainer = document.getElementById('user-pokedexes');
           ps.forEach((doc) => {
-            console.log(doc.data());
             let pokedexItemContainer = document.createElement('div');
             pokedexItemContainer.classList.add('pokedex-list-item');
             pokedexItemContainer.classList.add(doc.data()['pokedex']);
@@ -159,7 +158,6 @@ firebase.auth().onAuthStateChanged((user) => {
             e.preventDefault();
             pokemonLocationInfo.classList.add('visible');
             pokemonLocationInfoContainer.classList.remove('visible');
-            console.log(button);
             let pokemonTarget = button.dataset.pokemon;
             let url = getBulbaUrl(pokemonTarget.replace(/ /g, '_'));
 
@@ -179,11 +177,9 @@ firebase.auth().onAuthStateChanged((user) => {
                       for (let gameTitle of gameTitles) {
                         if (!found) {
                           let rowGameTitle = gameTitle.firstElementChild.firstElementChild.innerHTML.toLocaleLowerCase().trim().replace(/ /g, '-');
-                          console.log(rowGameTitle);
                           if (rowGameTitle === document.getElementById('pokedex').dataset.game) {
                             let locations = gameTitle.parentElement.querySelector('td').firstElementChild.firstElementChild.firstElementChild.firstElementChild.innerHTML;
                             let allLocations = locations.split(', ');
-                            console.log('Locs', allLocations);
                             pokemonLocationsContainer.innerHMTL = '';
                             for (let loc of allLocations) {
                               let locEl = document.createElement('li');

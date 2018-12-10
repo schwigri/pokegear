@@ -376,6 +376,15 @@ body {
   }
 }
 
+.pokedex-item-choose-link {
+  background-color: transparent;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
 .pokedex-item-number-container {
   color: #aaa;
   font-weight: bold;
@@ -384,21 +393,136 @@ body {
   top: .5em;
 }
 
+.pokedex-item-info-button-container {
+  background-color: transparent;
+  border: none;
+  color: #888;
+  font-weight: bold;
+  -webkit-appearance: none;
+  position: absolute;
+  top: .5em;
+  right: .5em;
+
+  &:hover {
+    color: #000;
+  }
+
+  button {
+    -webkit-appearance: none;
+    cursor: pointer;
+    color: inherit;
+    font: inherit;
+    background-color: transparent;
+    transition: .25s color;
+    border: none;
+  }
+}
+
 .pokedex-item-name-container {
   padding: 0 0 .5em;
   text-align: center;
 }
 
 .sidebar {
+  box-sizing: border-box;
   flex-shrink: 0;
   height: 100%;
+  padding: 2em 0 0;
   position: fixed;
   right: 0;
   top: $masthead_height;
   width: $sidebar_width;
 }
 
+.pokemon-location-info {
+  background-image: url(/assets/graphics/mew.gif);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50px;
+  margin-top: 2em;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transition: .25s opacity, .25s visibility;
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.offscreen {
+  position: absolute;
+  left: -99999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(0 0 0 0);
+}
+
+.li-container {
+  background-color: #fff;
+  height: 100%;
+  width: 100%;
+  flex-grow: 1;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .25s, visibility .25s;
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.user-pokedexes {
+  background-color: #fafafa;
+  outline: 1px solid #eee;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 1em;
+}
+
 .pokedex-list-item {
-  overflow: auto;
-  padding: 2em 0;
+  align-items: center;
+  background-color: #fafafa;
+  display: flex;
+  flex-direction: column;
+  outline: 1px solid #eee;
+  padding: 1em 0;
+  position: relative;
+  width: 100%;
+
+  img {
+    height: 175px;
+    opacity: .5;
+    margin: 0 auto;
+    transition: .25s opacity;
+  }
+
+  a {
+    align-items: center;
+    color: #888;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    position: relative;
+    text-decoration: none;
+    transition: .25s color;
+    width: 100%;
+
+    &:hover {
+      color: #333;
+
+      img {
+        opacity: 1;
+      }
+    }
+  }
+
+  span {
+    padding: .5em 0 0 0;
+  }
 }

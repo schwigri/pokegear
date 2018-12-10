@@ -1,9 +1,6 @@
 runtime: python37
 
 handlers:
-- url: /assets
-  secure: always
-  static_dir: assets
 - url: /.*
   secure: always
   script: auto

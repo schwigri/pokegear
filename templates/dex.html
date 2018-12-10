@@ -1,17 +1,21 @@
 <div class="pokedex-container">
-  <div class="pokedex">
+  <div id="pokedex" class="pokedex" data-game="{{ game }}">
     {% for pokedex in pokedexes %}
       <h1>{{ pokedex['name'] }}</h1>
-      <div class="pokedex-items-container" id="{{ pokedex['name'] }}-container">
+      <div class="pokedex-items-container" id="{{ pokedex['tag'] }}-container">
         {% for pokemon in pokedex['pokemon'] %}
           <div class="pokedex-item" id="pokemon-{{ pokedexes.index(pokedex) }}-{{ pokedex['pokemon'].index(pokemon) }}"
                data-id="{{ pokedexes.index(pokedex) }}-{{ pokedex['pokemon'].index(pokemon) }}"
                data-dex-num="{{ pokedex['pokemon'].index(pokemon) + 1 }}">
+            <div class="pokedex-item-choose-link"></div>
             <div class="pokedex-item-image-container">
               <img src="{{ pokemon['sprite'] }}" alt="{{ pokemon['name'] }}">
             </div>
             <div class="pokedex-item-number-container">
               <span class="pokedex-item-number">#{{ pokedex['pokemon'].index(pokemon) + 1 }}</span>
+            </div>
+            <div class="pokedex-item-info-button-container" data-pokemon="{{ pokemon['name'] }}">
+              <button class="info-button">ⓘ</button>
             </div>
             <div class="pokedex-item-name-container">
               <span class="pokedex-item-name">{{ pokemon['name'] }}</span>
@@ -22,6 +26,14 @@
     {% endfor %}
   </div>
   <div class="sidebar">
-    sidebar
+    <h1>Trainer Info</h1>
+    <p>Hey <span id="trainer-name">Trainer</span>! You've caught <span id="num-caught">0</span> / <span id="num-total">{{ pokemon_count }}</span></p>
+    <div id="pokemon-location-info" class="pokemon-location-info">
+      <div id="li-container" class="li-container">
+        <h1 id="li-name">Name</h1>
+        <ul id="li-spots"></ul>
+      </div>
+    </div>
   </div>
 </div>
+<div id="bulbapedia-content" class="offscreen"></div>

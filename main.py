@@ -31,19 +31,7 @@ else:
 
 @app.route('/')
 def root():
-    page = {
-        'content': 'home.html',
-        'id': 'portal',
-        'title': 'Pokégear — Log In or Register',
-        'head_tags': [
-            '<link rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css">',
-        ],
-        'script_tags': [
-            '<script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>',
-            '<script src="/assets/scripts/auth.js"></script>',
-        ],
-    }
-    return render_template('page.html', page=page)
+    return render_template('preview.html')
 
 
 @app.route('/log-in', strict_slashes=False)
@@ -86,11 +74,14 @@ def dex():
     user_id = request.args.get('uid', type=str)
     dex_id = request.args.get('id', type=str)
     pokedexes = []
+    game = ''
+    num_pokemon = 0
     if dex_id:
         try:
             all_pokemon = db.collection('pokemon').get()
             pokemon_data = {doc.id: doc.to_dict() for doc in all_pokemon}
             dex_data = db.collection('users').document(user_id).collection('pokedexes').document(dex_id).get().to_dict()
+            game = dex_data.get('pokedex')
             pokedex_names = [pokedex for pokedex in
                              db.collection('games').document(dex_data.get('pokedex')).get().to_dict().get('pokedexes')]
 
@@ -100,10 +91,11 @@ def dex():
                 pokedex_pokemon = []
                 for pokemon in pokedex_pokemon_list:
                     pokedex_pokemon.append(pokemon_data.get(pokemon))
+                    num_pokemon += 1
                 pokedexes.append({
                     'tag': pokedex,
                     'name': pokedex_data.get('name', pokedex),
-                    'pokemon': pokedex_pokemon
+                    'pokemon': pokedex_pokemon,
                 })
 
         except google.cloud.exceptions.NotFound:
@@ -120,7 +112,7 @@ def dex():
             'id': 'selector',
             'title': 'Select a Pokédex | Pokégear'
         }
-    return render_template('page.html', page=page, pokedexes=pokedexes)
+    return render_template('page.html', page=page, pokedexes=pokedexes, game=game, pokemon_count=num_pokemon)
 
 
 if __name__ == '__main__':

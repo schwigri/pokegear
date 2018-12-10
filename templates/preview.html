@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en-us">
+<meta charset="utf-8">
+<title>Pokégear &mdash; Online Pokédex Tracker!</title>
+<link rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css">
+<link rel="stylesheet" href="/assets/styles/preview.css">
+  <link rel="stylesheet" href="https://use.typekit.net/fmx5oal.css">
+<header id="intro-masthead" class="masthead floating-masthead">
+  <div class="masthead-logo">
+    <a href="/">
+      <img src="/assets/graphics/logo-color.svg" alt="Pokégear">
+    </a>
+  </div>
+  <nav class="masthead-nav">
+    <a href="#auth" class="auth-link">Log In or Sign Up</a>
+    <a href="/about">About</a>
+    <a href="/contact">Get In Touch</a>
+  </nav>
+</header>
+<div id="auth-screen" class="auth-screen">
+  <div id="auth-exit" class="auth-exit"></div>
+  <div id="auth-container" class="auth-container">
+    <div id="firebaseui-auth-container" class="firebaseui-auth-container"></div>
+  </div>
+</div>
+<main id="content" class="content">
+  <article class="introduction">
+    <div id="introduction-left-panel" class="introduction-panel introduction-panel-left">
+      <div class="introduction-panel-content">
+        <img src="/assets/graphics/charizard.gif" class="introduction-pokemon" alt="Charizard">
+        {% include 'preview-introduction.html' %}
+      </div>
+    </div>
+    <div id="introduction-right-panel" class="introduction-panel introduction-panel-right">
+      <div class="introduction-panel-content">
+        <img src="/assets/graphics/blastoise.gif" class="introduction-pokemon" alt="Blastoise">
+        {% include 'preview-introduction.html' %}
+      </div>
+    </div>
+  </article>
+</main>
+<script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+<script src="/assets/scripts/preview.js"></script>
+<script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
+<script src="/assets/scripts/auth.js"></script>
+</html>

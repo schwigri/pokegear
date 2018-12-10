@@ -72,11 +72,17 @@ firebase.auth().onAuthStateChanged((user) => {
             console.log(doc.data());
             let pokedexItemContainer = document.createElement('div');
             pokedexItemContainer.classList.add('pokedex-list-item');
+            pokedexItemContainer.classList.add(doc.data()['pokedex']);
+
             let pokedexButton = document.createElement('a');
-            pokedexButton.innerHTML = doc.data()['trainerName'] + '\'s ' + doc.data()['pokedex'] + ' Pokédex';
+            let pokedexImage = document.createElement('img');
+            pokedexImage.setAttribute('src', '/assets/graphics/covers/' + doc.data()['pokedex'] + '.png');
+            pokedexImage.setAttribute('alt', 'Pokémon ' + doc.data()['pokedex'] + ' version cover');
+            pokedexButton.appendChild(pokedexImage);
+            let pokedexText = document.createElement('span');
+            pokedexText.innerHTML = doc.data()['trainerName'];
+            pokedexButton.appendChild(pokedexText);
             pokedexButton.setAttribute('href', '/dex?uid=' + user.uid + '&id=' + doc.id);
-            pokedexButton.classList.add('btn');
-            pokedexButton.classList.add('btn-submit');
             pokedexItemContainer.appendChild(pokedexButton);
             userPokedexesContainer.appendChild(pokedexItemContainer);
           });
@@ -88,9 +94,19 @@ firebase.auth().onAuthStateChanged((user) => {
       if (PAGE === 'dex') {
         let currentUrl = new URL(window.location.href);
         let pokedexId = currentUrl.searchParams.get('id');
-        let pokemonItems = document.getElementsByClassName('pokedex-item');
-        for (let item of pokemonItems) {
-          item.addEventListener('click', () => {
+        let pokemonItems = document.getElementsByClassName('pokedex-item-choose-link');
+
+        let numTotalContainer = document.getElementById('num-total');
+        let numCaughtContainer = document.getElementById('num-caught');
+
+        let updateCount = () => {
+          let caught = document.getElementsByClassName('caught');
+          numCaughtContainer.innerText = '' + caught.length;
+        };
+
+        for (let button of pokemonItems) {
+          button.addEventListener('click', () => {
+            let item = button.parentElement;
             if (item.classList.contains('caught')) {
               item.classList.remove('caught');
               db.collection('users').doc(user.uid).collection('pokedexes').doc(pokedexId).get().then((doc) => {
@@ -103,7 +119,9 @@ firebase.auth().onAuthStateChanged((user) => {
                 }
                 db.collection('users').doc(user.uid).collection('pokedexes').doc(pokedexId).update({
                   'caught': caughtPokemon
-                })
+                }).then(() => {
+                  updateCount();
+                });
               });
             } else {
               item.classList.add('caught');
@@ -116,16 +134,82 @@ firebase.auth().onAuthStateChanged((user) => {
                 }
                 db.collection('users').doc(user.uid).collection('pokedexes').doc(pokedexId).update({
                   'caught': caughtPokemon
-                })
+                }).then(() => {
+                  updateCount();
+                });
               });
             }
-          });
+          }, true);
+        }
+        let infoButtons = document.getElementsByClassName('pokedex-item-info-button-container');
+        let getBulbaUrl = (name) => {
+          return 'https://cors.io/?https://bulbapedia.bulbagarden.net/wiki/' + name + '_(Pok%C3%A9mon)';
+        };
+
+        let bulbaContent = document.getElementById('bulbapedia-content');
+
+        let pokemonLocationInfo = document.getElementById('pokemon-location-info');
+        let pokemonLocationInfoContainer = document.getElementById('li-container');
+        let pokemonLocationName = document.getElementById('li-name');
+        let pokemonLocationsContainer = document.getElementById('li-spots');
+
+
+        for (let button of infoButtons) {
+          button.addEventListener('click', (e) => {
+            e.preventDefault();
+            pokemonLocationInfo.classList.add('visible');
+            pokemonLocationInfoContainer.classList.remove('visible');
+            console.log(button);
+            let pokemonTarget = button.dataset.pokemon;
+            let url = getBulbaUrl(pokemonTarget.replace(/ /g, '_'));
+
+            pokemonLocationName.innerText = pokemonTarget;
+            pokemonLocationsContainer.innerHTML = '';
+
+            fetch(url).then((response) => response.text()).then(pageSource => {
+              bulbaContent.innerHTML = pageSource;
+              let locationsTable = document.getElementById('Game_locations').parentElement.nextElementSibling.firstElementChild;
+              let found = false;
+              for (let node of locationsTable.children) {
+                if (!found) {
+                  let games = node.querySelectorAll('td table tbody tr:nth-child(2) td table tbody');
+                  for (let game of games) {
+                    if (!found) {
+                      let gameTitles = game.querySelectorAll('th');
+                      for (let gameTitle of gameTitles) {
+                        if (!found) {
+                          let rowGameTitle = gameTitle.firstElementChild.firstElementChild.innerHTML.toLocaleLowerCase().trim().replace(/ /g, '-');
+                          console.log(rowGameTitle);
+                          if (rowGameTitle === document.getElementById('pokedex').dataset.game) {
+                            let locations = gameTitle.parentElement.querySelector('td').firstElementChild.firstElementChild.firstElementChild.firstElementChild.innerHTML;
+                            let allLocations = locations.split(', ');
+                            console.log('Locs', allLocations);
+                            pokemonLocationsContainer.innerHMTL = '';
+                            for (let loc of allLocations) {
+                              let locEl = document.createElement('li');
+                              locEl.innerHTML = loc;
+                              pokemonLocationsContainer.appendChild(locEl);
+                            }
+                            found = true;
+                            break;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              pokemonLocationInfoContainer.classList.add('visible');
+            });
+          }, true);
         }
         db.collection('users').doc(user.uid).collection('pokedexes').doc(pokedexId).get().then((doc) => {
+          document.getElementById('trainer-name').innerText = doc.data()['trainerName'];
           if (doc.data()['caught'] !== undefined) {
             for (let pokemonNumber of doc.data()['caught']) {
               document.getElementById('pokemon-' + pokemonNumber).classList.add('caught');
             }
+            updateCount();
           }
         }).catch((error) => {
           console.error(error);

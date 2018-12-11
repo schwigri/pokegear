@@ -432,6 +432,11 @@ body {
   right: 0;
   top: $masthead_height;
   width: $sidebar_width;
+
+  a {
+    color: $c_light;
+    text-decoration: none;
+  }
 }
 
 .pokemon-location-info {

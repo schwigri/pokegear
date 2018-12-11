@@ -84,3 +84,14 @@ authExit.addEventListener('click', (e) => {
   authScreen.classList.remove('visible');
   app.createScrollListener();
 }, false);
+
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    for (let link of authLinks) {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = '/dex';
+      });
+    }
+  }
+});

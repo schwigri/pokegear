@@ -28,6 +28,8 @@ if os.environ.get('FLASK_ENV') == 'development':
 else:
     app = Flask(__name__)
 
+all_pokemon = db.collection('pokemon').get()
+
 
 @app.route('/')
 def root():

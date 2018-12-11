@@ -439,6 +439,9 @@ body {
   right: 0;
   top: 100px;
   width: 400px; }
+  .sidebar a {
+    color: #f85032;
+    text-decoration: none; }
 
 .pokemon-location-info {
   background-image: url(/assets/graphics/mew.gif);

@@ -47,8 +47,8 @@ firebase.auth().onAuthStateChanged((user) => {
         let onboardingForm = document.getElementById('onboarding-form');
         onboardingForm.addEventListener('submit', (e) => {
           e.preventDefault();
-          selectedGame = document.getElementById('game').value;
-          trainerName = document.getElementById('trainer-name').value;
+          let selectedGame = document.getElementById('game').value;
+          let trainerName = document.getElementById('trainer-name').value;
           if (trainerName === '' || selectedGame === '') {
             return false;
           }

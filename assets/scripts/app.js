@@ -14,13 +14,13 @@ db.settings({
   timestampsInSnapshots: true
 });
 
-let masthead = document.getElementById('masthead');
+let bodyMasthead = document.getElementById('masthead');
 
 let alternateMasthead = () => {
   if (window.scrollY === 0) {
-    masthead.classList.add('inverse');
+    bodyMasthead.classList.add('inverse');
   } else {
-    masthead.classList.remove('inverse');
+    bodyMasthead.classList.remove('inverse');
   }
 };
 
@@ -29,8 +29,8 @@ window.setInterval(alternateMasthead, 10);
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
-    document.getElementById('masthead').classList.remove('logged-out');
-    document.getElementById('masthead').classList.add('logged-in');
+    bodyMasthead.classList.remove('logged-out');
+    bodyMasthead.classList.add('logged-in');
     // Check if they've gone through onboarding
     let onboardingDone = false;
     db.collection('users').doc(user.uid).collection('pokedexes').limit(1).get().then((qs) => {

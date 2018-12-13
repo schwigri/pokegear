@@ -44,7 +44,7 @@ def log_in():
         ],
         'script_tags': [
             '<script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>',
-            '<script src="/assets/scripts/auth.js"></script>',
+            '<script src="/assets/scripts/auth.min.js"></script>',
         ],
     }
     return 'logging in'

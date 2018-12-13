@@ -195,6 +195,12 @@ firebase.auth().onAuthStateChanged((user) => {
                   }
                 }
               }
+              let bulbaLinks = document.querySelectorAll('#pokemon-location-info a');
+              for (let link of bulbaLinks) {
+                let currentDest = link.getAttribute('href');
+                link.setAttribute('target', '_blank');
+                link.setAttribute('href', 'https://bulbapedia.bulbagarden.net' + currentDest);
+              }
               pokemonLocationInfoContainer.classList.add('visible');
             });
           }, true);

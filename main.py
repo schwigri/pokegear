@@ -117,5 +117,25 @@ def dex():
     return render_template('page.html', page=page, pokedexes=pokedexes, game=game, pokemon_count=num_pokemon)
 
 
+@app.route('/about', strict_slashes=False)
+def about():
+    page = {
+        'content': 'about.html',
+        'id': 'about',
+        'title': 'About | Pokégear'
+    }
+    return render_template('page.html', page=page)
+
+
+@app.route('/contact', strict_slashes=False)
+def contact():
+    page = {
+        'content': 'contact.html',
+        'id': 'contact',
+        'title': 'Get In Touch | Pokégear'
+    }
+    return render_template('page.html', page=page)
+
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True)

@@ -199,6 +199,7 @@ body {
 .content {
   box-sizing: border-box;
   //margin-top: $masthead_height;
+  min-height: calc(100vh - #{$masthead_height} - 82px);
 }
 
 .button {
@@ -435,7 +436,6 @@ body {
 
   a {
     color: $c_light;
-    text-decoration: none;
   }
 }
 
@@ -529,5 +529,27 @@ body {
 
   span {
     padding: .5em 0 0 0;
+  }
+}
+
+.footer {
+  background-color: #222;
+  box-sizing: border-box;
+  color: #eee;
+  display: flex;
+  justify-content: space-around;
+  padding: 2em;
+  width: 100%;
+
+  a {
+    color: #eee;
+  }
+}
+
+.page {
+  line-height: 1.5;
+
+  a {
+    color: $c_light;
   }
 }
